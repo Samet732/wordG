@@ -9,7 +9,7 @@ def app(args):
         words = string_methods.removeNewLineCharacter(core.readWords(args.words_path))
         wordlist = core.readWordlistForExtending(args.extend_path)
 
-        if wordlist:
+        if numpy.size(wordlist):
             words = numpy.append(words, string_methods.removeNewLineCharacter(wordlist))
         def_words = words
 
@@ -20,16 +20,18 @@ def app(args):
 
         # following codes processes on 'words' variable
 
+        capitals = numpy.array([], dtype=str)
         # capitalize first letter
-        words = numpy.append(words, core.elementary_generator(words, lambda a : a.capitalize()))
+        capitals = numpy.append(capitals, core.elementary_generator(words, lambda a : a.capitalize()))
         # capitalize all letters
-        words = numpy.append(words, core.elementary_generator(words, lambda a : a.upper()))
+        capitals = numpy.append(capitals, core.elementary_generator(words, lambda a : a.upper()))
         # capitalize letter of odd index number
-        words = numpy.append(words, core.elementary_generator(words, lambda a : string_methods.compare_capitals(a, a[1::2])))
+        capitals = numpy.append(capitals, core.elementary_generator(words, lambda a : string_methods.compare_capitals(a, a[1::2].upper())))
         # capitalize letter of even index number
-        words = numpy.append(words, core.elementary_generator(words, lambda a : string_methods.compare_capitals(a, a[::2])))
+        capitals = numpy.append(capitals, core.elementary_generator(words, lambda a : string_methods.compare_capitals(a, a[::2].upper())))
 
         # save
+        words = numpy.append(words, capitals)
         core.writeWordlist(args.passwords_path, words)
     except Exception as e:
         if hasattr(e, 'message'):
@@ -48,4 +50,4 @@ if __name__ == "__main__":
     app(parser.parse_args())
     end = time.time()
 
-    print("Program successfully finished at", end - begin, "second(s).")
+    print("Program finished at", end - begin, "second(s).")
