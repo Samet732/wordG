@@ -14,16 +14,16 @@ def app(args):
         def_words = words
 
         # capitalize first letter
-        words = np.append(core.elementary_generator(words, lambda a : a.capitalize()))
+        words = numpy.append(core.elementary_generator(words, lambda a : a.capitalize()))
         # capitalize all letters
-        words = np.append(core.elementary_generator(words, lambda a : a.upper()))
+        words = numpy.append(core.elementary_generator(words, lambda a : a.upper()))
         # capitalize letter of odd index number
-        words = np.append(core.elementary_generator(words, lambda a : string_methods.compare_capitals(a, a[1::2])))
+        words = numpy.append(core.elementary_generator(words, lambda a : string_methods.compare_capitals(a, a[1::2])))
         # capitalize letter of even index number
-        words = np.append(core.elementary_generator(words, lambda a : string_methods.compare_capitals(a, a[::2])))
+        words = numpy.append(core.elementary_generator(words, lambda a : string_methods.compare_capitals(a, a[::2])))
 
         # basic generator (one degree more complex than elementary generator)
-        words = np.append(core.basic_generator(words))
+        words = numpy.append(core.basic_generator(words))
 
         # save
         core.writeWordlist(args.passwords_path, words)
