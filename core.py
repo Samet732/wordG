@@ -16,7 +16,7 @@ def readWords(path):
 
 def writeWordlist(path, wordlist):
     if not path: raise Exception("Output path mustn't be empty.")
-    file = open(path, 'a')
+    file = open(path, 'w')
 
     for i in range(np.size(wordlist)):
         file.write(str(wordlist[i]) + '\n')

@@ -6,24 +6,28 @@ import time
 
 def app(args):
     try:
-        words = core.readWords(args.words_path)
+        words = string_methods.removeNewLineCharacter(core.readWords(args.words_path))
         wordlist = core.readWordlistForExtending(args.extend_path)
 
-        if not wordlist:
-            words = numpy.append(words, wordlist)
+        if wordlist:
+            words = numpy.append(words, string_methods.removeNewLineCharacter(wordlist))
         def_words = words
 
-        # capitalize first letter
-        words = numpy.append(core.elementary_generator(words, lambda a : a.capitalize()))
-        # capitalize all letters
-        words = numpy.append(core.elementary_generator(words, lambda a : a.upper()))
-        # capitalize letter of odd index number
-        words = numpy.append(core.elementary_generator(words, lambda a : string_methods.compare_capitals(a, a[1::2])))
-        # capitalize letter of even index number
-        words = numpy.append(core.elementary_generator(words, lambda a : string_methods.compare_capitals(a, a[::2])))
+        # following codes processes on 'def_words' variable
 
         # basic generator (one degree more complex than elementary generator)
-        words = numpy.append(core.basic_generator(words))
+        words = numpy.append(words, core.basic_generator(def_words))
+
+        # following codes processes on 'words' variable
+
+        # capitalize first letter
+        words = numpy.append(words, core.elementary_generator(words, lambda a : a.capitalize()))
+        # capitalize all letters
+        words = numpy.append(words, core.elementary_generator(words, lambda a : a.upper()))
+        # capitalize letter of odd index number
+        words = numpy.append(words, core.elementary_generator(words, lambda a : string_methods.compare_capitals(a, a[1::2])))
+        # capitalize letter of even index number
+        words = numpy.append(words, core.elementary_generator(words, lambda a : string_methods.compare_capitals(a, a[::2])))
 
         # save
         core.writeWordlist(args.passwords_path, words)
