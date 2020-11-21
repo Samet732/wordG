@@ -40,7 +40,7 @@ def app(args):
 
 if __name__ == "__main__":
     begin = time.time()
-    parser = argparse.ArgumentParser(description="A powerful word generator for hackers. Generates passwords with input words.")
+    parser = argparse.ArgumentParser(description="A powerful word generator for hackers. Generates passwords with personal information.")
 
     parser.add_argument('words_path', type=str, help="Path of input file (words)")
     parser.add_argument('passwords_path', type=str, help="Path of output file (passwords)")
